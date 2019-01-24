@@ -52,16 +52,25 @@ App.fn.renderAgeLoop = function(){
 };
 
 App.fn.renderAge = function(){
-  var now       = new Date
+  var now       = new Date;
   var duration  = now - this.dob;
   var years     = duration / 31556900000;
+  var lifeExpectancy = 82.3; // google.com/search?q=life+expectancy+canada
 
-  var majorMinor = years.toFixed(9).toString().split('.');
+  var majorMinor = years.toFixed(9)
+      .toString()
+      .split('.');
+  var majorMinorExpectancy = (lifeExpectancy - years)
+      .toFixed(9)
+      .toString()
+      .split('.');
 
   requestAnimationFrame(function(){
     this.html(this.view('age')({
       year:         majorMinor[0],
-      milliseconds: majorMinor[1]
+      milliseconds: majorMinor[1],
+      yearExpectancy: majorMinorExpectancy[0],
+      millisExpectancy: majorMinorExpectancy[1],
     }));
   }.bind(this));
 };
